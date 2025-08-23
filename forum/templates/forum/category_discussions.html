@@ -11,4 +11,7 @@
     {% empty %}
         <p>No discussions in this category yet.</p>
     {% endfor %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'new_discussion' %}" style="display:inline-block; margin-top:20px; padding:10px 20px; background:#444; color:#fff; text-decoration:none;">Add New Discussion</a>
+    {% endif %}
 {% endblock %}
