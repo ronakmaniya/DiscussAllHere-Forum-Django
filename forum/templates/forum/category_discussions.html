@@ -1,0 +1,14 @@
+{% extends "forum/base.html" %}
+{% block title %}{{ category.name }} Discussions{% endblock %}
+{% block content %}
+    <h1>{{ category.name }} Discussions</h1>
+    {% for discussion in discussions %}
+        <div class="discussion" style="background: #fff; padding: 15px; margin: 10px 0; border: 1px solid #ddd;">
+            <h2><a href="{% url 'discussion_detail' discussion.id %}">{{ discussion.title }}</a></h2>
+            <p>{{ discussion.content|slice:":100" }}...</p>
+            <small>By {{ discussion.author.username }} on {{ discussion.created_at }}</small>
+        </div>
+    {% empty %}
+        <p>No discussions in this category yet.</p>
+    {% endfor %}
+{% endblock %}

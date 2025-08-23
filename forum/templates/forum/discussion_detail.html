@@ -1,30 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>DiscussAllHere - Discussion Detail</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; }
-        .navbar { background-color: #333; color: #fff; padding: 10px; text-align: right; }
-        .navbar a { color: #fff; margin-left: 15px; text-decoration: none; }
-        .discussion-detail { border: 1px solid #ddd; padding: 20px; background-color: #fff; }
-    </style>
-</head>
-<body>
-    <div class="navbar">
-        {% if user.is_authenticated %}
-            <span>Welcome, {{ user.username }}</span>
-            <a href="{% url 'logout' %}">Logout</a>
-        {% else %}
-            <a href="{% url 'login' %}">Login</a>
-            <a href="{% url 'signup' %}">Signup</a>
-        {% endif %}
-    </div>
-    <div class="discussion-detail">
-        <h2>{{ discussion.title }}</h2>
+{% extends "forum/base.html" %}
+{% block title %}{{ discussion.title }}{% endblock %}
+{% block content %}
+    <div class="discussion-detail" style="background: #fff; padding: 20px; border: 1px solid #ddd;">
+        <h1>{{ discussion.title }}</h1>
         <p>{{ discussion.content }}</p>
         <small>By {{ discussion.author.username }} on {{ discussion.created_at }}</small>
     </div>
-    <br>
-    <a href="{% url 'discussion_list' %}">Back to Discussions</a>
-</body>
-</html>
+    <div class="comments">
+        <h2>Comments</h2>
+        {% for comment in comments %}
+            <div class="comment" style="margin-left: 20px; padding: 10px; border-left: 2px solid #ddd;">
+                <p>{{ comment.text }}</p>
+                <small>By {{ comment.author.username }} on {{ comment.created_at }}</small>
+            </div>
+        {% empty %}
+            <p>No comments yet.</p>
+        {% endfor %}
+    </div>
+    {% if user.is_authenticated %}
+        <h3>Add a Comment</h3>
+        <form method="POST" action="{% url 'add_comment' discussion.id %}">
+            {% csrf_token %}
+            <textarea name="text" rows="3" style="width:100%;"></textarea><br>
+            <input type="submit" value="Post Comment">
+        </form>
+    {% endif %}
+{% endblock %}

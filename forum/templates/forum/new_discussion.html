@@ -1,25 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>DiscussAllHere - New Discussion</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #eef; padding: 20px; }
-        .form-container { background-color: #fff; padding: 20px; border: 1px solid #ddd; max-width: 600px; margin: auto; }
-        input[type="text"], textarea { width: 100%; padding: 10px; margin: 10px 0; }
-        input[type="submit"] { background-color: #444; color: #fff; border: none; padding: 10px; cursor: pointer; }
-        a { text-decoration: none; color: blue; }
-    </style>
-</head>
-<body>
-    <div class="form-container">
-        <h2>Start a New Discussion</h2>
+{% extends "forum/base.html" %}
+{% block title %}New Discussion{% endblock %}
+{% block content %}
+    <div class="form-container" style="background: #fff; padding: 20px; border: 1px solid #ddd; max-width: 600px; margin: auto;">
+        <h2>Create New Discussion</h2>
         <form method="POST">
             {% csrf_token %}
-            <input type="text" name="title" placeholder="Discussion Title" required>
-            <textarea name="content" placeholder="Content" rows="5" required></textarea>
-            <input type="submit" value="Post Discussion">
+            <label for="category">Category:</label>
+            <select name="category" id="category" style="width: 100%; padding: 10px; margin: 10px 0;" required>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+            <input type="text" name="title" placeholder="Discussion Title" required style="width: 100%; padding: 10px; margin: 10px 0;">
+            <textarea name="content" placeholder="Content" rows="5" required style="width: 100%; padding: 10px; margin: 10px 0;"></textarea>
+            <input type="submit" value="Post Discussion" style="padding: 10px; background: #444; color: #fff; border: none; cursor: pointer;">
         </form>
-        <a href="{% url 'discussion_list' %}">Back to Discussions</a>
     </div>
-</body>
-</html>
+{% endblock %}

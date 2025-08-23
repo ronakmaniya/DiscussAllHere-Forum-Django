@@ -1,0 +1,13 @@
+{% extends "forum/base.html" %}
+{% block title %}Search Results{% endblock %}
+{% block content %}
+    <h1>Search Results for "{{ query }}"</h1>
+    {% for discussion in discussions %}
+        <div class="discussion" style="background: #fff; padding: 15px; margin: 10px 0; border: 1px solid #ddd;">
+            <h2><a href="{% url 'discussion_detail' discussion.id %}">{{ discussion.title }}</a></h2>
+            <p>{{ discussion.content|slice:":100" }}...</p>
+        </div>
+    {% empty %}
+        <p>No results found.</p>
+    {% endfor %}
+{% endblock %}
