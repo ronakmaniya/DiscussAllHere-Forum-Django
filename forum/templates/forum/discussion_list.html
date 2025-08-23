@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DiscussAllHere - Discussions</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #fff; padding: 20px; }
+        .discussion { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; }
+        .discussion h3 { margin: 0; }
+        .navbar { background-color: #333; color: #fff; padding: 10px; text-align: right; }
+        .navbar a { color: #fff; margin-left: 15px; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        {% if user.is_authenticated %}
+            <span>Welcome, {{ user.username }}</span>
+            <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'signup' %}">Signup</a>
+        {% endif %}
+    </div>
+    <h1>Discussions</h1>
+    {% for discussion in discussions %}
+        <div class="discussion">
+            <h3><a href="{% url 'discussion_detail' discussion.id %}">{{ discussion.title }}</a></h3>
+            <p>{{ discussion.content|slice:":100" }}...</p>
+            <small>By {{ discussion.author.username }} on {{ discussion.created_at }}</small>
+        </div>
+    {% empty %}
+        <p>No discussions yet. Be the first to start one!</p>
+    {% endfor %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'new_discussion' %}">Start a New Discussion</a>
+    {% endif %}
+</body>
+</html>
