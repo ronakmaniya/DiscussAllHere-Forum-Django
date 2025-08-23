@@ -12,12 +12,14 @@ A simple discussion forum built with **Django** 🐍✨
 
 ## Project Structure
 
+```bash
 DiscussAllHere-Forum-Django/
 │── DiscussAllHere/ # Main project settings
 │── forum/ # Forum app (models, views, templates)
 │── templates/forum/ # HTML templates
 │── db.sqlite3 # Local development DB
 │── manage.py # Django management script
+```
 
 ## Setup & Run
 
