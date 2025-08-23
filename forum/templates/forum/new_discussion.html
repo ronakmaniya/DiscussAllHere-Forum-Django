@@ -1,19 +1,28 @@
+<!-- new discussion page is completed by me. - ((Utsav CE027)) -->
+
 {% extends "forum/base.html" %}
-{% block title %}New Discussion{% endblock %}
+{% block title %} New Discussion {% endblock %}
+
 {% block content %}
-    <div class="form-container" style="background: #fff; padding: 20px; border: 1px solid #ddd; max-width: 600px; margin: auto;">
-        <h2>Create New Discussion</h2>
+    <div class="form-container" style="background: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 50px auto;">
+        <h2 style="text-align: center; color: #333; font-family: Arial, sans-serif; margin-bottom: 20px;">Create New Discussion</h2>
         <form method="POST">
             {% csrf_token %}
-            <label for="category">Category:</label>
-            <select name="category" id="category" style="width: 100%; padding: 10px; margin: 10px 0;" required>
+            <label for="category" style="font-size: 1.1em; color: #333;">Category:</label>
+            <select name="category" id="category" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" required>
                 {% for category in categories %}
-                    <option value="{{ category.id }}">{{ category.name }}</option>
+                    <option value="{{ category.id }}" {% if selected_category and category.id == selected_category.id %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
                 {% endfor %}
             </select>
-            <input type="text" name="title" placeholder="Discussion Title" required style="width: 100%; padding: 10px; margin: 10px 0;">
-            <textarea name="content" placeholder="Content" rows="5" required style="width: 100%; padding: 10px; margin: 10px 0;"></textarea>
-            <input type="submit" value="Post Discussion" style="padding: 10px; background: #444; color: #fff; border: none; cursor: pointer;">
+            <input type="text" name="title" placeholder="Discussion Title" required style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            <textarea name="content" placeholder="Content" rows="5" required style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;"></textarea>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                <input type="submit" value="Post Discussion" style="padding: 10px 20px; background: #444; color: #fff; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">
+                <a href="{% url 'category_discussions' selected_category.id %}" style="padding: 10px 20px; background: #444; color: #fff; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; text-decoration: none;">Back</a>
+            </div>
         </form>
     </div>
 {% endblock %}

@@ -1,5 +1,8 @@
+<!-- ((Ronak CE037)) - login page is done by me. -->
+
 {% extends "forum/base.html" %}
-{% block title %}Login{% endblock %}
+{% block title %} Login {% endblock %}
+
 {% block content %}
     <div class="form-container" style="background: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 400px; margin: 50px auto;">
         <h2 style="text-align: center; color: #333; font-family: Arial, sans-serif;">Login</h2>
@@ -9,6 +12,11 @@
             <input type="password" name="password" placeholder="Password" required style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
             <input type="submit" value="Login" style="padding: 10px; background: #444; color: #fff; border: 1px solid #ccc; border-radius: 4px; width: 100%; cursor: pointer;">
         </form>
-        <p style="text-align: center;">Don't have an account? <a href="{% url 'signup' %}" style="color: #333; text-decoration: none;">Signup here</a></p>
+        {% if error_message %}
+            <div style="color: red; font-size: 0.9em; text-align: center; margin-top: 10px;">
+                {{ error_message }}
+            </div>
+        {% endif %}
+        <p style="text-align: center; margin-top: 15px;">Don't have an account? <a href="{% url 'signup' %}" style="color: blue; text-decoration: none;">Signup here</a></p>
     </div>
 {% endblock %}

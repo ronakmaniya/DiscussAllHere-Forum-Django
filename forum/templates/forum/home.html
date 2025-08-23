@@ -1,10 +1,17 @@
+<!-- home page is designed by me. - ((Utsav CE027)) -->
+
 {% extends "forum/base.html" %}
-{% block title %}Home{% endblock %}
+{% block title %} Home {% endblock %}
+
 {% block content %}
-    <div style="text-align: center; margin-bottom: 30px;">
+    <div style="text-align: center; margin-bottom: 40px;">
         <h1 style="font-size: 2.5em; color: #333;">Welcome to the DiscussAllHere Forum!</h1>
-        <p style="font-size: 1.2em; color: #555;">Engage in meaningful discussions, ask questions, and share your knowledge with our vibrant community.</p>
-    </div>
+        <p style="font-size: 1.2em; color: #555;">
+            "DiscussAllHere" is a community forum website that enables users to discuss topics of interest,
+            share knowledge, and build relationships. The platform aims to foster a sense of community and provide a 
+            <span style="font-weight: bold; padding: 0 4px;">safe space for users to express themselves</span>.
+        </p>
+    </div>  
     <hr>
     <h1>Discussion Categories</h1>
     {% for category in categories %}
