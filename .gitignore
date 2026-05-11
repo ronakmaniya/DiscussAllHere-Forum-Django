@@ -16,7 +16,6 @@ media/
 staticfiles/
 .env
 venv/
-data/demo_data.json
 
 # VSCode
 .vscode/

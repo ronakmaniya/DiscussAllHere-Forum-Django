@@ -1,0 +1,124 @@
+{
+  "users": [
+    {
+      "id": "user_alice",
+      "username": "alice",
+      "email": "alice@example.com",
+      "password": "AlicePass123!"
+    },
+    {
+      "id": "user_bob",
+      "username": "bob",
+      "email": "bob@example.com",
+      "password": "BobPass123!"
+    },
+    {
+      "id": "user_charlie",
+      "username": "charlie",
+      "email": "charlie@example.com",
+      "password": "CharliePass123!"
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat_django",
+      "name": "Django Help"
+    },
+    {
+      "id": "cat_ideas",
+      "name": "Project Ideas"
+    },
+    {
+      "id": "cat_campus",
+      "name": "Campus Life"
+    },
+    {
+      "id": "cat_tech",
+      "name": "Tech News"
+    }
+  ],
+  "discussions": [
+    {
+      "id": "disc_django_forms",
+      "category": "cat_django",
+      "author": "user_alice",
+      "title": "Django forms validation tips",
+      "content": "How do you handle form validation errors in Django templates without repeating code?"
+    },
+    {
+      "id": "disc_ui_ideas",
+      "category": "cat_ideas",
+      "author": "user_bob",
+      "title": "Discussion board UI ideas",
+      "content": "Looking for suggestions to improve a forum UI while keeping it simple for beginners."
+    },
+    {
+      "id": "disc_study_spots",
+      "category": "cat_campus",
+      "author": "user_charlie",
+      "title": "Best study spots on campus",
+      "content": "Share your favorite quiet places to study and why they work for you."
+    },
+    {
+      "id": "disc_ai_tools",
+      "category": "cat_tech",
+      "author": "user_alice",
+      "title": "AI tools for students 2026",
+      "content": "What AI tools are you using for assignments or learning? Please share pros and cons."
+    }
+  ],
+  "comments": [
+    {
+      "id": "com_django_1",
+      "discussion": "disc_django_forms",
+      "author": "user_bob",
+      "text": "I use Django forms with custom clean() methods and show errors in the template with form.non_field_errors."
+    },
+    {
+      "id": "com_django_1_reply",
+      "discussion": "disc_django_forms",
+      "author": "user_alice",
+      "parent_comment": "com_django_1",
+      "text": "Nice. I also prefer using form.as_p with custom error styling."
+    },
+    {
+      "id": "com_ui_1",
+      "discussion": "disc_ui_ideas",
+      "author": "user_charlie",
+      "text": "Try a clean layout with a sticky nav, category tags, and short summaries."
+    },
+    {
+      "id": "com_ui_1_reply",
+      "discussion": "disc_ui_ideas",
+      "author": "user_bob",
+      "parent_comment": "com_ui_1",
+      "text": "Agree on category tags. Also add a quick search bar in the header."
+    },
+    {
+      "id": "com_campus_1",
+      "discussion": "disc_study_spots",
+      "author": "user_alice",
+      "text": "Library 3rd floor near the windows is quiet and has good lighting."
+    },
+    {
+      "id": "com_campus_1_reply",
+      "discussion": "disc_study_spots",
+      "author": "user_charlie",
+      "parent_comment": "com_campus_1",
+      "text": "Same here. Early mornings are the best."
+    },
+    {
+      "id": "com_ai_1",
+      "discussion": "disc_ai_tools",
+      "author": "user_bob",
+      "text": "I use Notion AI for notes and GitHub Copilot for coding exercises."
+    },
+    {
+      "id": "com_ai_1_reply",
+      "discussion": "disc_ai_tools",
+      "author": "user_alice",
+      "parent_comment": "com_ai_1",
+      "text": "Copilot is great, but be careful to understand the code."
+    }
+  ]
+}

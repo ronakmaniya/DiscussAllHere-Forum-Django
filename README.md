@@ -2,6 +2,11 @@
 
 A discussion forum built with Django. Includes categories, threaded comments, search, and simple moderation tools.
 
+## Live Website
+
+- Production URL: https://discussallhere.onrender.com
+- Hosting Platform: Render (https://render.com/)
+
 ## Features
 
 - User signup, login, logout
