@@ -103,8 +103,10 @@ Then start the server and open http://127.0.0.1:8000/admin/ to log in.
 
 Use the included build script and gunicorn start command:
 
-- Build Command: ./build.sh
-- Start Command: gunicorn DiscussAllHere.wsgi
+```bash
+./build.sh
+gunicorn DiscussAllHere.wsgi
+```
 
 ### Render Setup
 
