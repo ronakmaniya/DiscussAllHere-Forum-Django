@@ -1,0 +1,31 @@
+<div id="signupModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('signupModal')">&times;</span>
+        <h2 class="card-title" style="text-align: center;">Signup</h2>
+        <form method="POST" action="{% url 'signup' %}">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" required class="input" style="width: 100%; margin: 10px 0;">
+            <input type="email" name="email" placeholder="Email" required class="input" style="width: 100%; margin: 10px 0;">
+            <input type="password" name="password" placeholder="Password" required class="input" style="width: 100%; margin: 10px 0;">
+            <input type="submit" value="Signup" class="btn btn-primary" style="width: 100%;">
+        </form>
+        {% if signup_error_message %}
+            <div class="error-text" style="font-size: 0.95em; text-align: center; margin-top: 10px;">
+                {{ signup_error_message }}
+            </div>
+        {% endif %}
+        <div class="modal-footer">
+            <span>Already have an account?</span>
+            <a href="javascript:void(0)" onclick="closeModal('signupModal'); openModal('loginModal')">Log in</a>
+        </div>
+    </div>
+</div>
+{% if signup_open or signup_error_message %}
+<script>
+    window.addEventListener('load', function () {
+        if (typeof openModal === 'function') {
+            openModal('signupModal');
+        }
+    });
+</script>
+{% endif %}

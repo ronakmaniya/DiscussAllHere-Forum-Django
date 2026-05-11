@@ -1,0 +1,26 @@
+{% extends "forum/base.html" %}
+{% block title %} Edit Discussion {% endblock %}
+
+{% block content %}
+    <div class="form-card card fade-up">
+        <h2 class="card-title" style="text-align: center; margin-bottom: 20px;">Edit Discussion</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="category">Category:</label>
+            <select name="category" id="category" class="select" required>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if category.id == discussion.category.id %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+            <input type="text" name="title" placeholder="Discussion Title" value="{{ discussion.title }}" required class="input">
+            <textarea name="content" placeholder="Content" rows="5" required class="textarea">{{ discussion.content }}</textarea>
+
+            <div class="form-actions">
+                <input type="submit" value="Save Changes" class="btn btn-primary">
+                <a href="{% url 'discussion_detail' discussion.slug %}" class="btn btn-secondary">Back</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

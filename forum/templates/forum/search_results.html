@@ -4,16 +4,39 @@
 {% block title %} Search Results {% endblock %}
 
 {% block content %}
-    <h1>Search Results for "{{ query }}"</h1>
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
-        <a href="{% url 'home' %}" style="padding: 10px 20px; background: #444; color: #fff; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; text-decoration: none;">Back</a>
-    </div>
+    <h1 class="card-title">Search Results for "{{ query }}"</h1>
+    <form method="GET" class="toolbar card">
+        <input type="hidden" name="q" value="{{ query }}">
+        <label for="sort">Sort:</label>
+        <select name="sort" id="sort" class="select">
+            <option value="newest" {% if sort == 'newest' %}selected{% endif %}>Newest</option>
+            <option value="oldest" {% if sort == 'oldest' %}selected{% endif %}>Oldest</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Apply</button>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+    </form>
     {% for discussion in discussions %}
-        <div class="discussion" style="background: #fff; padding: 15px; margin: 10px 0; border: 1px solid #ddd;">
-            <h2><a href="{% url 'discussion_detail' discussion.id %}">{{ discussion.title }}</a></h2>
-            <p>{{ discussion.content|slice:":100" }}...</p>
+        <div class="card fade-up">
+            <h2 class="card-title"><a href="{% url 'discussion_detail' discussion.slug %}">{{ discussion.title }}</a></h2>
+            <p class="muted">{{ discussion.content|slice:":100" }}...</p>
         </div>
     {% empty %}
-        <p>No results found.</p>
+        {% if query %}
+            <p>No results found for "{{ query }}".</p>
+        {% else %}
+            <p>Enter a search term to see results.</p>
+        {% endif %}
     {% endfor %}
+
+    {% if page_obj and page_obj.paginator.num_pages > 1 %}
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a class="action-link" href="?page={{ page_obj.previous_page_number }}&q={{ query }}{% if sort %}&sort={{ sort }}{% endif %}">Previous</a>
+            {% endif %}
+            <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+                <a class="action-link" href="?page={{ page_obj.next_page_number }}&q={{ query }}{% if sort %}&sort={{ sort }}{% endif %}">Next</a>
+            {% endif %}
+        </div>
+    {% endif %}
 {% endblock %}

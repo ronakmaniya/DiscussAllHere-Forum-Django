@@ -1,37 +1,79 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>DiscussAllHere - Discussions</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #fff; padding: 20px; }
-        .discussion { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; }
-        .discussion h3 { margin: 0; }
-        .navbar { background-color: #333; color: #fff; padding: 10px; text-align: right; }
-        .navbar a { color: #fff; margin-left: 15px; text-decoration: none; }
-    </style>
-</head>
-<body>
-    <div class="navbar">
+{% extends "forum/base.html" %}
+{% block title %} All Discussions {% endblock %}
+
+{% block content %}
+    <h1 class="card-title">All Discussions</h1>
+
+    <form method="GET" class="toolbar card">
+        <div class="field">
+            <label for="sort">Sort:</label>
+            <select name="sort" id="sort" class="select">
+            <option value="newest" {% if sort == 'newest' %}selected{% endif %}>Newest</option>
+            <option value="oldest" {% if sort == 'oldest' %}selected{% endif %}>Oldest</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label for="category">Category:</label>
+            <select name="category" id="category" class="select">
+            <option value="">All</option>
+            {% for category in categories %}
+                <option value="{{ category.slug }}" {% if selected_category_slug == category.slug %}selected{% endif %}>
+                    {{ category.name }}
+                </option>
+            {% endfor %}
+            </select>
+        </div>
+
         {% if user.is_authenticated %}
-            <span>Welcome, {{ user.username }}</span>
-            <a href="{% url 'logout' %}">Logout</a>
-        {% else %}
-            <a href="{% url 'login' %}">Login</a>
-            <a href="{% url 'signup' %}">Signup</a>
+            <label class="field">
+                <input type="checkbox" name="mine" value="1" {% if mine %}checked{% endif %}>
+                My posts
+            </label>
         {% endif %}
-    </div>
-    <h1>Discussions</h1>
+
+        <button type="submit" class="btn btn-primary">Apply</button>
+    </form>
+
+    {% if user.is_authenticated %}
+        <div class="toolbar">
+            <a href="{% url 'home' %}" class="btn btn-primary">Start a Discussion</a>
+            <span class="muted">Choose a category first.</span>
+        </div>
+    {% endif %}
+
     {% for discussion in discussions %}
-        <div class="discussion">
-            <h3><a href="{% url 'discussion_detail' discussion.id %}">{{ discussion.title }}</a></h3>
-            <p>{{ discussion.content|slice:":100" }}...</p>
-            <small>By {{ discussion.author.username }} on {{ discussion.created_at }}</small>
+        <div class="card fade-up">
+            <h2 class="card-title"><a href="{% url 'discussion_detail' discussion.slug %}">{{ discussion.title }}</a></h2>
+            <p class="muted">{{ discussion.content|slice:":120" }}...</p>
+            <div class="muted">
+                By <b>{{ discussion.author.username }}</b> on {{ discussion.created_at }}
+                in <a href="{% url 'category_discussions' discussion.category.slug %}">{{ discussion.category.name }}</a>
+                {% if user.is_authenticated and discussion.author == user %}
+                    &nbsp;
+                    <a href="{% url 'edit_discussion' discussion.slug %}" class="action-link">Edit Discussion</a>
+                {% endif %}
+            </div>
         </div>
     {% empty %}
-        <p>No discussions yet. Be the first to start one!</p>
+        {% if mine and user.is_authenticated %}
+            <p>No discussions found for your posts. Try turning off "My posts" or changing filters.</p>
+        {% elif selected_category_slug %}
+            <p>No discussions found for this category and filter.</p>
+        {% else %}
+            <p>No discussions yet. Be the first to start one!</p>
+        {% endif %}
     {% endfor %}
-    {% if user.is_authenticated %}
-        <a href="{% url 'new_discussion' %}">Start a New Discussion</a>
+
+    {% if page_obj and page_obj.paginator.num_pages > 1 %}
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a class="action-link" href="?page={{ page_obj.previous_page_number }}{% if sort %}&sort={{ sort }}{% endif %}{% if selected_category_slug %}&category={{ selected_category_slug }}{% endif %}{% if mine %}&mine=1{% endif %}">Previous</a>
+            {% endif %}
+            <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+                <a class="action-link" href="?page={{ page_obj.next_page_number }}{% if sort %}&sort={{ sort }}{% endif %}{% if selected_category_slug %}&category={{ selected_category_slug }}{% endif %}{% if mine %}&mine=1{% endif %}">Next</a>
+            {% endif %}
+        </div>
     {% endif %}
-</body>
-</html>
+{% endblock %}

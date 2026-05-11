@@ -1,14 +1,15 @@
 # DiscussAllHere-Forum-Django
 
-A simple discussion forum built with **Django** 🐍✨
+A discussion forum built with Django. Includes categories, threaded comments, search, and simple moderation tools.
 
 ## Features
 
-- User signup & login
-- Create new discussions
-- List all discussions
-- View discussion details
-- Separate templates for logged-in and non-logged-in users
+- User signup, login, logout
+- Category-based discussions and global discussion list
+- Create discussions and add comments (with reply support)
+- Delete own discussions and comments
+- Search by discussion title
+- About/Help page
 
 ## Project Structure
 
@@ -35,22 +36,90 @@ DiscussAllHere-Forum-Django/
 
 ## Setup & Run
 
+## Environment
+
+Create a local .env file from the example and adjust values as needed:
+
+```bash
+copy .env.example .env         # Windows PowerShell
+cp .env.example .env           # macOS/Linux
+```
+
+Required values for production:
+- DJANGO_SECRET_KEY
+- DJANGO_DEBUG=false
+- DJANGO_ALLOWED_HOSTS
+- DATABASE_URL (optional; SQLite works for small demos)
+
+The app reads from system environment variables first and falls back to .env.
+
 ```bash
 # Clone the repo
-git clone https://github.com/YourUsername/DiscussAllHere-Forum-Django.git
+git clone https://github.com/ronakmaniya/DiscussAllHere-Forum-Django.git
 cd DiscussAllHere-Forum-Django
 
-# Create virtual environment
+# Create a virtual environment in the project root
 python -m venv venv
-source venv/bin/activate   # On Windows: venv\Scripts\activate
 
-# Install dependencies
-pip install -r requirements.txt
+# Install dependencies (Windows PowerShell)
+venv\Scripts\python -m pip install -r requirements.txt
 
-# After clone and before Run server, run the given commands first
-python manage.py makemigrations
-python manage.py migrate
+# Install dependencies (macOS/Linux)
+venv/bin/python -m pip install -r requirements.txt
+
+# Database setup (first run after clone)
+venv\Scripts\python manage.py migrate      # Windows PowerShell
+venv/bin/python manage.py migrate           # macOS/Linux
 
 # Run server
-python manage.py runserver
+venv\Scripts\python manage.py runserver     # Windows PowerShell
+venv/bin/python manage.py runserver          # macOS/Linux
+```
+
+## Migrations
+
+- Run `venv\Scripts\python manage.py makemigrations` (Windows) or `venv/bin/python manage.py makemigrations` (macOS/Linux) only when you change models.
+- Run `venv\Scripts\python manage.py migrate` (Windows) or `venv/bin/python manage.py migrate` (macOS/Linux) after pulling new migrations or on a fresh clone.
+
+## Admin Access
+
+If you want to use the Django admin:
+
+```bash
+venv\Scripts\python manage.py createsuperuser     # Windows PowerShell
+venv/bin/python manage.py createsuperuser          # macOS/Linux
+```
+
+Then start the server and open http://127.0.0.1:8000/admin/ to log in.
+
+## Notes
+
+- The development server runs at http://127.0.0.1:8000/
+- Use `CTRL+BREAK` to stop the server on Windows
+
+## Deployment (Render)
+
+### Build and Start Commands
+
+Use the included build script and gunicorn start command:
+
+- Build Command: ./build.sh
+- Start Command: gunicorn DiscussAllHere.wsgi
+
+### Render Setup
+
+1. Push the project to GitHub.
+2. Create a Render Web Service and connect your repo.
+3. Set Build Command: `./build.sh`
+4. Set Start Command: `gunicorn DiscussAllHere.wsgi`
+5. Add environment variables:
+	- DJANGO_SECRET_KEY
+	- DJANGO_DEBUG=false
+	- DJANGO_ALLOWED_HOSTS=yourapp.onrender.com
+	- DATABASE_URL (optional)
+
+If static files do not load, run:
+
+```bash
+venv\Scripts\python manage.py collectstatic --noinput
 ```

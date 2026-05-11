@@ -4,20 +4,20 @@
 {% block title %} Home {% endblock %}
 
 {% block content %}
-    <div style="text-align: center; margin-bottom: 40px;">
-        <h1 style="font-size: 2.5em; color: #333;">Welcome to the DiscussAllHere Forum!</h1>
-        <p style="font-size: 1.2em; color: #555;">
+    <div class="card fade-up" style="text-align: center; margin-bottom: 32px;">
+        <h1 class="card-title" style="font-size: 2.4em;">Welcome to the DiscussAllHere Forum!</h1>
+        <p class="muted" style="font-size: 1.1em;">
             "DiscussAllHere" is a community forum website that enables users to discuss topics of interest,
             share knowledge, and build relationships. The platform aims to foster a sense of community and provide a 
-            <span style="font-weight: bold; padding: 0 4px;">safe space for users to express themselves</span>.
+            <span class="chip">safe space for users to express themselves</span>.
         </p>
     </div>  
-    <hr>
-    <h1>Discussion Categories</h1>
+    <hr class="divider">
+    <h1 class="card-title">Discussion Categories</h1>
     {% for category in categories %}
-        <div class="category" style="background: #fff; padding: 15px; margin: 10px 0; border: 1px solid #ddd;">
-            <h2><a href="{% url 'category_discussions' category.id %}">{{ category.name }}</a></h2>
-            <p>Discussions: {{ category.discussions.count }}</p>
+        <div class="card fade-up">
+            <h2 class="card-title"><a href="{% url 'category_discussions' category.slug %}">{{ category.name }}</a></h2>
+            <p class="muted">Discussions: {{ category.discussions.count }}</p>
         </div>
     {% empty %}
         <p>No categories available.</p>

@@ -4,19 +4,18 @@
 {% block title %} New Category {% endblock %}
 
 {% block content %}
-<div class="form-container" style="background: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin: 50px auto;">
-    <h2 style="text-align: center; color: #333; font-family: Arial, sans-serif; margin-bottom: 20px;">Add New Category</h2>
+<div class="form-card card fade-up">
+    <h2 class="card-title" style="text-align: center; margin-bottom: 20px;">Add New Category</h2>
     <form method="POST">
         {% csrf_token %}
-        <label for="name" style="font-size: 1.1em; color: #333;">Category Name:</label>
-        <input type="text" name="name" id="name" required 
-               style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+        <label for="name">Category Name:</label>
+        <input type="text" name="name" id="name" required class="input">
         {% if error_message %}
-            <div style="color: red; font-size: 0.9em; margin-top: 5px;">{{ error_message }}</div>
+            <div class="error-text" style="font-size: 0.95em; margin-top: 5px;">{{ error_message }}</div>
         {% endif %}
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
-            <input type="submit" value="Add Category" style="padding: 10px 20px; background: #444; color: #fff; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">
-            <a href="{% url 'home' %}" style="padding: 10px 20px; background: #444; color: #fff; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; text-decoration: none;">Back</a>
+        <div class="form-actions" style="margin-top: 20px;">
+            <input type="submit" value="Add Category" class="btn btn-primary">
+            <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
         </div>        
     </form>
 </div>
